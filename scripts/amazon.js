@@ -1,6 +1,9 @@
-import {cart} from "../data/cart.js";
+import {cart, addToCart} from "../data/cart.js";
+import { products } from "../data/products.js";
 
 let productsHTML = '';
+
+
 
 products.forEach((product) => {
     productsHTML  = productsHTML +`
@@ -56,6 +59,23 @@ products.forEach((product) => {
 })
 
 
+function updateCartQauntity()
+{
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  })
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
+
+function showAddedMessage(displayMesaage)
+{
+  displayMesaage.classList.add('added-to-cart-visible');
+  setTimeout(() => {
+      displayMesaage.classList.remove('added-to-cart-visible');
+  }, 2000);
+}
+
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
 document.querySelectorAll('.js-add-to-cart')
@@ -63,39 +83,12 @@ document.querySelectorAll('.js-add-to-cart')
       button.addEventListener('click', () => {
         const productId = button.dataset.productId;
         let quantitySelector = document.querySelector('.js-quantity-selector-'+productId);
+        let quantitySelectorValue = Number(quantitySelector.value);
         let quantity = Number(quantitySelector.value);
-        let matchingItem;
-
         const displayMesaage = document.querySelector('.js-added-to-cart-'+productId);
-        console.log(displayMesaage.classList);
-
-        cart.forEach((item) => {
-          if(productId == item.productId)
-          {
-              matchingItem = item;
-          }
-        })
-
-        if(matchingItem)
-        {
-          matchingItem.quantity += Number(quantitySelector.value);
-        }
-        else {
-          cart.push({
-            productId,
-            quantity 
-          });
-        }
-
-        let cartQuantity = 0;
-
-        cart.forEach((item) => {
-          cartQuantity += item.quantity;
-        })
-        
-
-
-        document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-        
+       
+        addToCart(productId, quantity, quantitySelectorValue) 
+        showAddedMessage(displayMesaage)
+        updateCartQauntity();       
       })
 })
