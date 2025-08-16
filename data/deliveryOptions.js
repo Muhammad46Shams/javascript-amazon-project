@@ -30,10 +30,36 @@ export function getDeliveryOption(deliveryOptionId)
 
 export function calculateDeliveryDate(deliveryOption)
 {
-    const today = dayjs();
-    const deliveyDate  = today.add(deliveryOption.deliveryDays, 'day');
-    const dateString = deliveyDate.format('dddd, MMMM DD');
-    console.log(dateString, 'date');
+    // const today = dayjs();
     
+    // const deliveyDate  = today.add(deliveryOption.deliveryDays, 'day');
+    // const dateString = deliveyDate.format('dddd, MMMM DD');
+    
+    // return dateString;
+    let remainingDays = deliveryOption.deliveryDays;
+    let deliveryDate = dayjs();
+
+    while (remainingDays > 0) {
+        deliveryDate = deliveryDate.add(1, 'day');
+        console.log(deliveryDate, 'deliveryDate');
+        console.log(remainingDays, 'remainingDays');
+        
+
+        if (!isWeekend(deliveryDate)) {
+        remainingDays--;
+        // This is a shortcut for:
+        // remainingDays = remainingDays - 1;
+        }
+    }
+
+     const dateString = deliveryDate.format(
+        'dddd, MMMM D'
+    );
+
     return dateString;
+}
+
+function isWeekend(date) {
+  const dayOfWeek = date.format('dddd');
+  return dayOfWeek === 'Saturday' || dayOfWeek === 'Sunday';
 }
