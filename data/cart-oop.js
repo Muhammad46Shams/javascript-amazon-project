@@ -129,7 +129,6 @@ cart.addToCart('54e0eccd-8f36-462b-b68a-8182611d9add', 3);
 console.log(cart);
 
 
-
 businessCart.loadFromStorage();
 
 console.log(businessCart);
