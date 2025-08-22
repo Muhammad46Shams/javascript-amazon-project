@@ -1,7 +1,7 @@
 import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { rendercheckoutHeader } from "./checkout/checkoutHeader.js";
-import { loadProducts } from "../data/products.js";
+import { loadProducts, loadProductFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
 
 
@@ -11,11 +11,7 @@ import { loadCart } from "../data/cart.js";
 // promise is a class
 
 Promise.all([
-    new Promise((resolve) => {
-        loadProducts(() => {
-            resolve('value1');
-        })
-    }),
+    loadProductFetch(),
     new Promise((resolve) => {
         loadCart(() => {
             resolve();
