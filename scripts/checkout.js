@@ -8,8 +8,29 @@ import { loadCart } from "../data/cart.js";
 // import  "../data/car.js";
 // import  "../data/backend-practice.js";
 
+
+// async wait
+
+async function loadPage()
+{
+    await loadProductFetch();
+
+    const value = await new Promise((resolve) => {
+        loadCart(() => {
+            resolve('value3');
+        });
+    })
+    renderOrderSummary();
+    renderPaymentSummary();
+    rendercheckoutHeader();
+}
+
+loadPage();
+
+
 // promise is a class
 
+/*
 Promise.all([
     loadProductFetch(),
     new Promise((resolve) => {
@@ -27,31 +48,33 @@ Promise.all([
 })
 
 
-// new Promise((resolve) => {
-//     loadProducts(() => {
-//         resolve('value1');
-//     })
+new Promise((resolve) => {
+    loadProducts(() => {
+        resolve('value1');
+    })
 
-// }).then((value) => {
-//     console.log(value);
+}).then((value) => {
+    console.log(value);
     
-//     return new Promise((resolve) => {
-//         loadCart(() => {
-//             resolve();
-//         });
-//     })
+    return new Promise((resolve) => {
+        loadCart(() => {
+            resolve();
+        });
+    })
 
-// }).then(() => {
-//     renderOrderSummary();
-//     renderPaymentSummary();
-//     rendercheckoutHeader();
-// });
+}).then(() => {
+    renderOrderSummary();
+    renderPaymentSummary();
+    rendercheckoutHeader();
+});
 
 
-// loadProducts(() => {
-//     loadCart(() => {
-//         renderOrderSummary();
-//         renderPaymentSummary();
-//         rendercheckoutHeader();
-//     });
-// })
+loadProducts(() => {
+    loadCart(() => {
+        renderOrderSummary();
+        renderPaymentSummary();
+        rendercheckoutHeader();
+    });
+})
+
+*/
